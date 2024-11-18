@@ -1,5 +1,5 @@
 ### Welcome to the @whale price fetching project
-### This is the API/DB part you can find FE here
+### This is the API/DB part you can find FE [here](https://github.com/0xvoider42/-whale-FE/edit/)
 
 ## How to?
 - clone the repo
