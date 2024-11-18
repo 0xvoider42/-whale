@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    container_name: crypto-api
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+    command: yarn start:dev
+    ports:
+      - ${PORT:-3000}:${PORT:-3000}
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:latest
+    container_name: crypto-db
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_DB: ${DB_NAME:-crypto_db}
+    env_file:
+      - .env
+    ports:
+      - ${DB_PORT:-5432}:${DB_PORT:-5432}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    command: -p ${DB_PORT:-5432}
+volumes:
+  postgres_data:
